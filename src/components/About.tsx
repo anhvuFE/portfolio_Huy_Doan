@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { BsCalendarFill, BsHeartFill, BsStarFill } from 'react-icons/bs';
 import { FaGraduationCap, FaBullseye, FaPlane, FaNewspaper, FaFutbol } from 'react-icons/fa';
-import { HiAcademicCap, HiHeart } from 'react-icons/hi';
+import { HiHeart } from 'react-icons/hi';
 import { BiTargetLock } from 'react-icons/bi';
 import { MdSchool } from 'react-icons/md';
 
