@@ -62,7 +62,8 @@ const Experience = () => {
         </motion.div>
 
         <div className="max-w-4xl mx-auto">
-          <div className="relative">
+          {/* Desktop Timeline */}
+          <div className="hidden md:block relative">
             <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gray-300"></div>
 
             {experiences.map((exp, index) => (
@@ -100,6 +101,46 @@ const Experience = () => {
 
                 <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-white rounded-full border-4 border-primary-600 flex items-center justify-center z-10">
                   <Briefcase size={20} className="text-primary-600" />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Mobile Timeline */}
+          <div className="md:hidden relative">
+            <div className="absolute left-8 top-0 w-0.5 h-full bg-gray-300"></div>
+
+            {experiences.map((exp, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                className="relative flex items-start mb-8 pl-16"
+              >
+                <div className="absolute left-5 w-6 h-6 bg-white rounded-full border-4 border-primary-600 flex items-center justify-center">
+                  <div className="w-2 h-2 bg-primary-600 rounded-full"></div>
+                </div>
+
+                <div className="bg-white p-5 rounded-xl shadow-lg w-full">
+                  <div className={`inline-block px-3 py-1 rounded-full text-white text-xs font-semibold mb-3 bg-gradient-to-r ${exp.color}`}>
+                    {exp.type}
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-1">{exp.title}</h3>
+                  <h4 className="text-sm font-medium text-gray-700 mb-2">{exp.company}</h4>
+                  <div className="flex items-center gap-2 text-gray-500 mb-3">
+                    <Calendar size={14} />
+                    <span className="text-xs">{exp.period}</span>
+                  </div>
+                  <ul className="space-y-2">
+                    {exp.responsibilities.map((resp, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-xs text-gray-600">
+                        <CheckCircle size={14} className="text-green-500 flex-shrink-0 mt-0.5" />
+                        <span>{resp}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </motion.div>
             ))}
