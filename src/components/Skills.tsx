@@ -11,8 +11,19 @@ import {
   Palette,
   BarChart,
   Video,
-  PenTool
+  PenTool,
 } from 'lucide-react';
+import {
+  FaFacebookF,
+  FaGoogle,
+  FaInstagram,
+  FaTiktok,
+  FaYoutube,
+  FaFigma,
+  FaWordpress,
+  FaMailchimp,
+} from 'react-icons/fa';
+import Marquee from './effects/Marquee';
 
 const Skills = () => {
   const softSkills = [
@@ -24,12 +35,23 @@ const Skills = () => {
   ];
 
   const technicalSkills = [
-    { name: 'Facebook Ads', icon: Facebook, level: 90, color: 'from-blue-400 to-blue-600' },
-    { name: 'Google SEO', icon: Search, level: 75, color: 'from-green-400 to-green-600' },
-    { name: 'UI/UX Design', icon: Palette, level: 70, color: 'from-purple-400 to-purple-600' },
-    { name: 'Content Marketing', icon: PenTool, level: 85, color: 'from-pink-400 to-pink-600' },
-    { name: 'Video Editing', icon: Video, level: 80, color: 'from-red-400 to-red-600' },
-    { name: 'Data Analysis', icon: BarChart, level: 75, color: 'from-yellow-400 to-yellow-600' },
+    { name: 'Facebook Ads', icon: Facebook, level: 90 },
+    { name: 'Google SEO', icon: Search, level: 75 },
+    { name: 'UI/UX Design', icon: Palette, level: 70 },
+    { name: 'Content Marketing', icon: PenTool, level: 85 },
+    { name: 'Video Editing', icon: Video, level: 80 },
+    { name: 'Data Analysis', icon: BarChart, level: 75 },
+  ];
+
+  const tools = [
+    { icon: FaFacebookF, name: 'Meta Ads' },
+    { icon: FaGoogle, name: 'Google Ads' },
+    { icon: FaInstagram, name: 'Instagram' },
+    { icon: FaTiktok, name: 'TikTok' },
+    { icon: FaYoutube, name: 'YouTube' },
+    { icon: FaFigma, name: 'Figma' },
+    { icon: FaWordpress, name: 'WordPress' },
+    { icon: FaMailchimp, name: 'Mailchimp' },
   ];
 
   const marketingMetrics = [
@@ -40,19 +62,45 @@ const Skills = () => {
   ];
 
   return (
-    <section id="skills" className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="skills" className="py-24 relative overflow-hidden bg-dark-surface/40">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-14"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Skills
-          </h2>
-          <div className="w-20 h-1 bg-primary-600 mx-auto"></div>
+          <p className="section-eyebrow mb-3">02 — What I Do</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-dark-text mb-4">Skills</h2>
+          <div className="w-20 h-1 bg-brand-gradient mx-auto rounded-full"></div>
+        </motion.div>
+
+        {/* Tools & platforms marquee */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-14"
+        >
+          <p className="text-center text-xs font-semibold uppercase tracking-[0.18em] text-dark-muted mb-5">
+            Tools &amp; Platforms
+          </p>
+          <Marquee speed={28}>
+            {tools.map((tool) => {
+              const Icon = tool.icon;
+              return (
+                <div
+                  key={tool.name}
+                  className="flex items-center gap-3 px-6 py-3 rounded-2xl bg-white/5 border border-white/10 hover:border-brand-pink/40 transition-colors duration-300"
+                >
+                  <Icon className="text-2xl text-primary-300" />
+                  <span className="text-dark-text font-medium whitespace-nowrap">{tool.name}</span>
+                </div>
+              );
+            })}
+          </Marquee>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -62,7 +110,7 @@ const Skills = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h3 className="text-2xl font-semibold text-gray-900 mb-6">Soft Skills</h3>
+            <h3 className="text-2xl font-semibold text-dark-text mb-6">Soft Skills</h3>
             <div className="space-y-4">
               {softSkills.map((skill, index) => (
                 <motion.div
@@ -71,20 +119,20 @@ const Skills = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="bg-white p-4 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-50 card-hover"
+                  className="glass-card p-4 rounded-2xl"
                 >
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 bg-primary-100 rounded-lg">
-                        <skill.icon size={20} className="text-primary-600" />
+                      <div className="p-2 bg-primary-500/15 border border-primary-500/30 rounded-lg">
+                        <skill.icon size={20} className="text-primary-400" />
                       </div>
-                      <span className="font-medium text-gray-900">{skill.name}</span>
+                      <span className="font-medium text-dark-text">{skill.name}</span>
                     </div>
-                    <span className="text-sm font-semibold text-primary-600">{skill.level}%</span>
+                    <span className="text-sm font-semibold text-primary-400 font-display">{skill.level}%</span>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="w-full bg-white/5 rounded-full h-2">
                     <motion.div
-                      className="bg-gradient-to-r from-primary-400 to-primary-600 h-2 rounded-full"
+                      className="bg-brand-gradient h-2 rounded-full shadow-glow"
                       initial={{ width: 0 }}
                       whileInView={{ width: `${skill.level}%` }}
                       viewport={{ once: true }}
@@ -102,7 +150,7 @@ const Skills = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h3 className="text-2xl font-semibold text-gray-900 mb-6">Technical Skills</h3>
+            <h3 className="text-2xl font-semibold text-dark-text mb-6">Technical Skills</h3>
             <div className="grid grid-cols-2 gap-4">
               {technicalSkills.map((skill, index) => (
                 <motion.div
@@ -112,23 +160,23 @@ const Skills = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   whileHover={{ scale: 1.05 }}
-                  className="bg-white p-5 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-50 card-hover"
+                  className="glass-card p-5 rounded-2xl"
                 >
                   <div className="flex flex-col items-center text-center">
-                    <div className={`p-3 bg-gradient-to-r ${skill.color} rounded-full mb-3`}>
-                      <skill.icon size={24} className="text-white" />
+                    <div className="p-3 bg-primary-500/15 border border-primary-500/30 rounded-full mb-3">
+                      <skill.icon size={24} className="text-primary-400" />
                     </div>
-                    <h4 className="font-medium text-gray-900 mb-1">{skill.name}</h4>
-                    <div className="w-full bg-gray-200 rounded-full h-1.5 mb-1">
+                    <h4 className="font-medium text-dark-text mb-1">{skill.name}</h4>
+                    <div className="w-full bg-white/5 rounded-full h-1.5 mb-1">
                       <motion.div
-                        className={`bg-gradient-to-r ${skill.color} h-1.5 rounded-full`}
+                        className="bg-brand-gradient h-1.5 rounded-full"
                         initial={{ width: 0 }}
                         whileInView={{ width: `${skill.level}%` }}
                         viewport={{ once: true }}
                         transition={{ duration: 1, delay: index * 0.1 }}
                       />
                     </div>
-                    <span className="text-xs text-gray-500">{skill.level}%</span>
+                    <span className="text-xs text-dark-muted font-display">{skill.level}%</span>
                   </div>
                 </motion.div>
               ))}
@@ -141,9 +189,9 @@ const Skills = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mt-12 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-8 rounded-3xl shadow-xl backdrop-blur-sm border border-white/50"
+          className="mt-12 glass-card p-8 rounded-3xl"
         >
-          <h3 className="text-2xl font-semibold text-gray-900 mb-6 text-center">
+          <h3 className="text-2xl font-semibold text-dark-text mb-6 text-center">
             Marketing Metrics Proficiency
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -154,11 +202,12 @@ const Skills = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white p-4 rounded-lg text-center"
+                whileHover={{ y: -4 }}
+                className="bg-white/5 border border-white/10 hover:border-primary-500/40 p-4 rounded-xl text-center transition-all duration-300"
               >
-                <TrendingUp size={24} className="text-primary-600 mx-auto mb-2" />
-                <h4 className="text-lg font-bold text-gray-900">{metric.name}</h4>
-                <p className="text-xs text-gray-500">{metric.description}</p>
+                <TrendingUp size={24} className="text-primary-400 mx-auto mb-2" />
+                <h4 className="text-lg font-bold text-dark-text font-display">{metric.name}</h4>
+                <p className="text-xs text-dark-muted">{metric.description}</p>
               </motion.div>
             ))}
           </div>
