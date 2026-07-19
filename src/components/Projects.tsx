@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { ExternalLink, TrendingUp, Users, Target, DollarSign } from 'lucide-react';
+import CountUp from './effects/CountUp';
+import TiltCard from './effects/TiltCard';
 
 const Projects = () => {
   const projects = [
@@ -14,7 +16,6 @@ const Projects = () => {
         { icon: Users, label: 'Leads', value: '500+' },
       ],
       tags: ['Facebook Ads', 'Real Estate', 'Lead Generation'],
-      color: 'from-blue-400 to-cyan-400',
     },
     {
       title: 'LeyMja Brand Building',
@@ -27,7 +28,6 @@ const Projects = () => {
         { icon: TrendingUp, label: 'Revenue', value: '+200%' },
       ],
       tags: ['Brand Building', 'Content Marketing', 'Social Media'],
-      color: 'from-purple-400 to-pink-400',
     },
     {
       title: 'Content Marketing Strategy',
@@ -40,64 +40,70 @@ const Projects = () => {
         { icon: Target, label: 'Conversion', value: '12%' },
       ],
       tags: ['Content Strategy', 'SEO', 'Video Marketing'],
-      color: 'from-green-400 to-blue-400',
     },
   ];
 
   return (
-    <section id="projects" className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="projects" className="py-24 relative overflow-hidden bg-dark-surface/40">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-14"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Featured Projects
-          </h2>
-          <div className="w-20 h-1 bg-primary-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+          <p className="section-eyebrow mb-3">04 — Selected Work</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-dark-text mb-4">Featured Projects</h2>
+          <div className="w-20 h-1 bg-brand-gradient mx-auto rounded-full"></div>
+          <p className="mt-4 text-dark-muted max-w-2xl mx-auto">
             Successful marketing projects and campaigns I have participated in and contributed to
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div
+          variants={{ show: { transition: { staggerChildren: 0.14 } } }}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
           {projects.map((project, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ y: -10 }}
-              className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
+              variants={{
+                hidden: { opacity: 0, y: 60 },
+                show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+              }}
             >
+              <TiltCard className="glass-card rounded-xl overflow-hidden group h-full">
               <div className="relative h-48 overflow-hidden">
-                <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-80`}></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-dark-bg via-dark-bg/40 to-transparent z-10"></div>
+                <div className="absolute inset-0 bg-primary-500/20 mix-blend-overlay z-10"></div>
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1 bg-white/90 text-gray-800 text-xs font-semibold rounded-full">
+                <div className="absolute top-4 left-4 z-20">
+                  <span className="px-3 py-1 bg-dark-bg/70 backdrop-blur border border-primary-500/30 text-primary-300 text-xs font-semibold rounded-full font-display">
                     {project.category}
                   </span>
                 </div>
               </div>
 
               <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
-                <p className="text-gray-600 text-sm mb-4 line-clamp-3">{project.description}</p>
+                <h3 className="text-xl font-bold text-dark-text mb-2">{project.title}</h3>
+                <p className="text-dark-muted text-sm mb-4 line-clamp-3">{project.description}</p>
 
                 <div className="grid grid-cols-3 gap-2 mb-4">
                   {project.results.map((result, idx) => (
                     <div key={idx} className="text-center">
-                      <result.icon size={20} className="text-primary-600 mx-auto mb-1" />
-                      <p className="text-lg font-bold text-gray-900">{result.value}</p>
-                      <p className="text-xs text-gray-500">{result.label}</p>
+                      <result.icon size={20} className="text-primary-400 mx-auto mb-1" />
+                      <p className="text-lg font-bold text-dark-text font-display">
+                        <CountUp value={result.value} />
+                      </p>
+                      <p className="text-xs text-dark-muted">{result.label}</p>
                     </div>
                   ))}
                 </div>
@@ -106,7 +112,7 @@ const Projects = () => {
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full"
+                      className="px-2 py-1 bg-white/5 border border-white/10 text-dark-muted text-xs rounded-full"
                     >
                       {tag}
                     </span>
@@ -116,15 +122,16 @@ const Projects = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-lg font-medium hover:from-primary-600 hover:to-primary-700 transition-colors"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-brand-gradient text-white rounded-lg font-semibold transition-all duration-300 hover:shadow-glow"
                 >
                   <span>View Details</span>
                   <ExternalLink size={16} />
                 </motion.button>
               </div>
+              </TiltCard>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
